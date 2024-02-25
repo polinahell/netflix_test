@@ -1,0 +1,42 @@
+Based on the normalized data model we discussed, you'll need at least four tables to effectively organize the data provided in the Netflix dataset:
+
+Users - User demographic information.
+Subscriptions - Subscription details.
+Usage - Information about content consumption.
+Payments - Details about payments.
+
+CREATE TABLE Users (
+    User_ID INT PRIMARY KEY,
+    Country VARCHAR(255),
+    Age INT,
+    Gender VARCHAR(50)
+);
+
+CREATE TABLE Subscriptions (
+    Subscription_ID INT PRIMARY KEY,
+    User_ID INT,
+    Subscription_Type VARCHAR(50),
+    Monthly_Revenue DECIMAL(10, 2),
+    Plan_Duration VARCHAR(50),
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
+);
+
+CREATE TABLE Usage (
+    Usage_ID INT PRIMARY KEY AUTO_INCREMENT,
+    User_ID INT,
+    Device VARCHAR(255),
+    Movies_Watched INT,
+    Series_Watched INT,
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
+);
+
+
+CREATE TABLE Payments (
+    Payment_ID INT PRIMARY KEY AUTO_INCREMENT,
+    User_ID INT,
+    Join_Date DATE,
+    Last_Payment_Date DATE,
+    Active_Profiles INT,
+    Household_Profile_Ind INT,
+    FOREIGN KEY (User_ID) REFERENCES Users(User_ID)
+);

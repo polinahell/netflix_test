@@ -1,0 +1,35 @@
+
+a. The Most Profitable Country for Netflix
+
+SELECT Country, SUM(Monthly Revenue) AS TotalRevenue
+FROM Subscriptions
+JOIN Users ON Subscriptions.User ID = Users.User ID
+GROUP BY Country
+ORDER BY TotalRevenue DESC
+LIMIT 1;
+
+
+b. The Most Popular Packages Per Country
+
+SELECT Country, `Subscription Type`, COUNT(`Subscription Type`) AS PackageCount
+FROM Subscriptions
+JOIN Users ON Subscriptions.User ID = Users.User ID
+GROUP BY Country, `Subscription Type`
+ORDER BY Country, PackageCount DESC;
+
+c. Which Country Has the Potential for Improving Earnings if Netflix Starts Charging Subscribers an Additional Fee for Sharing Netflix Households Outside of Their Own?
+
+SELECT Country, COUNT(User ID) AS PotentialImprovement
+FROM Users
+JOIN Payments ON Users.User ID = Payments.User ID
+WHERE `Household Profile Ind` != 1 -- Assuming '1' indicates same household
+GROUP BY Country
+ORDER BY PotentialImprovement DESC;
+
+d. A Report Showing the Popularity of Movies and Series in Different Customer Segments and the Device Used to Consume, Across the Different Markets the Company Operates In
+
+SELECT Country, Gender, Age, Device, AVG(`Movies Watched`) AS AvgMovies, AVG(`Series Watched`) AS AvgSeries
+FROM Users
+JOIN Usage ON Users.User ID = Usage.User ID
+GROUP BY Country, Gender, Age, Device
+ORDER BY Country, Gender, Age, Device;
